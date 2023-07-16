@@ -1,0 +1,22 @@
+{
+	"name": "anisur2805/wp-projects",
+	"description": "A plugin for Projects showcase",
+	"type": "wordpress-plugin",
+	"license": "GPLv2",
+	"authors": [
+		{
+			"name": "Anisur Rahman",
+			"email": "anisur2805@gmail.com"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"WP\\Projects\\": "includes/"
+		},
+		"files": [
+			"includes/functions.php"
+		]
+	}
+}

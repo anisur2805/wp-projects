@@ -1,0 +1,42 @@
+.__wp_projects_wrapper {
+   
+}
+.__form-group {
+    margin-bottom: 20px;
+}
+
+.__form-group label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.__form-group textarea {
+
+}
+
+div#upload_image_container {
+    border: 1px solid #ddd;
+    width: fit-content;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+#upload_image_container img {
+    max-width: 200px;
+    height: auto;
+    margin: 10px;
+}
+
+#preview_images_container {
+    border: 1px solid #ddd;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+#preview_images_container img {
+    max-width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
