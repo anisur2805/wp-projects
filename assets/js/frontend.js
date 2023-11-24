@@ -6,7 +6,7 @@
         let selectedCat = $(this).val();
 
         let data = {
-            action: 'renderBySelect',
+            action: 'render_by_select',
             selectId: selectedCat,
             nonce: wpProjects.nonce
         }
@@ -19,7 +19,7 @@
         let selectedCategory = $(this).val();
 
         let data = {
-            action: 'renderBySelect',
+            action: 'render_by_select',
             category: selectedCategory,
             nonce: wpProjects.nonce
         };
@@ -65,8 +65,8 @@
         $('#projects-modal').show();
 
         let data = {
-            action: 'renderPopupById',
-            postId: targetId,
+            action: 'render_popup_by_id',
+            post_id: targetId,
             nonce: wpProjectsPopup.nonce
         };
 
