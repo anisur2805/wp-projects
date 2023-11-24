@@ -19,85 +19,84 @@ use WP\Projects\Installer;
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-require_once __DIR__ . "/vendor/autoload.php";
+require_once __DIR__ . '/vendor/autoload.php';
 
 final class WP_Projects {
-    /**
-     * plugin version
-     */
-    const version = '1.0';
+	/**
+	 * plugin version
+	 */
+	const VERSION = '1.0';
 
-    /**
-     * class constructor
-     */
-    private function __construct() {
-        $this->define_constants();
+	/**
+	 * class constructor
+	 */
+	private function __construct() {
+		$this->define_constants();
 
-        register_activation_hook( __FILE__, [ $this, 'activate' ] );
-        add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
+		add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
+	}
 
-    }
+	/**
+	 * Initialize a singleton instance
+	 *
+	 * @return \WP_Projects
+	 */
+	public static function init() {
+		static $instance = false;
+		if ( ! $instance ) {
+			$instance = new self();
+		}
 
-    /**
-     * Initialize a singleton instance
-     *
-     * @return \WP_Projects
-     */
-    public static function init() {
-        static $instance = false;
-        if ( !$instance ) {
-            $instance = new self();
-        }
+		return $instance;
+	}
 
-        return $instance;
-    }
+	/**
+	 * define plugin require constants
+	 *
+	 * @return void
+	 */
+	public function define_constants() {
+        // @codingStandardsIgnoreStart
+		define( 'WP_Projects_VERSION', self::VERSION );
+		define( 'WP_Projects_FILE', __FILE__ );
+		define( 'WP_Projects_PATH', __DIR__ );
+		define( 'WP_Projects_URL', plugins_url( '', WP_Projects_FILE ) );
+		define( 'WP_Projects_ASSETS', WP_Projects_URL . '/assets' );
+		define( 'WP_Projects_INCLUDES', WP_Projects_URL . '/includes' );
+        // @codingStandardsIgnoreEnd
+	}
 
-    /**
-     * define plugin require constants
-     *
-     * @return void
-     */
-    public function define_constants() {
-        define( 'WP_Projects_VERSION', self::version );
-        define( 'WP_Projects_FILE', __FILE__ );
-        define( 'WP_Projects_PATH', __DIR__ );
-        define( 'WP_Projects_URL', plugins_url( '', WP_Projects_FILE ) );
-        define( 'WP_Projects_ASSETS', WP_Projects_URL . '/assets' );
-        define( 'WP_Projects_INCLUDES', WP_Projects_URL . '/includes' );
-    }
+	/**
+	 * Do staff upon plugin activation
+	 *
+	 * @return void
+	 */
+	public function activate() {
+		$installer = new Installer();
+		$installer->run();
+	}
 
-    /**
-     * Do staff upon plugin activation
-     *
-     * @return void
-     */
-    public function activate() {
-        $installer = new Installer();
-        $installer->run();
-    }
+	public function init_plugin() {
 
-    public function init_plugin() {
+		/**
+		 * Load Assets
+		 */
+		new WP\Projects\Assets();
 
-        /**
-         * Load Assets
-         */
-        new WP\Projects\Assets();
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			new Ajax();
+		}
 
-        if( defined( 'DOING_AJAX') && DOING_AJAX ) {
-            new Ajax();
-        }
-
-        /**
-         * Load Admin Class
-         */
-        if( is_admin()) {
-            new \WP\Projects\Admin();
-        } else {
-            new \WP\Projects\Frontend();
-        }
-    }
-
-
+		/**
+		 * Load Admin Class
+		 */
+		if ( is_admin() ) {
+			new \WP\Projects\Admin();
+		} else {
+			new \WP\Projects\Frontend();
+		}
+	}
 }
 
 /**
@@ -106,8 +105,7 @@ final class WP_Projects {
  * @return \WP_Projects
  */
 function wp_projects() {
-    return WP_Projects::init();
+	return WP_Projects::init();
 }
 
 wp_projects();
-
